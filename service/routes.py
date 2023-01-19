@@ -73,6 +73,7 @@ def list_accounts():
     app.logger.info("returning accounts", len(account_list))
 
     return jsonify(account_list), status.HTTP_200_OK
+
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
@@ -103,6 +104,15 @@ def get_accounts(account_id):
 
 # ... place you code here to DELETE an account ...
 
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_account(account_id):
+    """Delete an account"""
+    app.logger.info("Request to delete an account")
+    account = Account.find(account_id)
+    if account:
+        account.delete()
+
+    return "", status.HTTP_204_NO_CONTENT
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
